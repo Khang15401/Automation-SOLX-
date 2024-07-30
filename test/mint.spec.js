@@ -11,7 +11,7 @@ function sleep(ms) {
     let driver;
     try {
       driver = await new Builder().forBrowser("chrome").build();
-      await driver.get("https://app-core-client.vercel.app/");
+      await driver.get("https://solx-stg.blocktrend.xyz/");
       // await driver.get('https://solx.community/');
 
       await sleep(10000);
@@ -20,7 +20,7 @@ function sleep(ms) {
 
       // Luu cua so ban dau
       let originalWindow = await driver.getWindowHandle();
-
+      let initialWindowHandles = await driver.getAllWindowHandles();
       // await sleep(3000);
       // let hideNotiupdate = await driver.findElement(By.xpath('/html/body/div[3]/div/div/div[1]/div/div[3]/header/img'));
       // await hideNotiupdate.click();
@@ -42,7 +42,6 @@ function sleep(ms) {
       );
       await newWallet.click();
 
-      let initialWindowHandles = await driver.getAllWindowHandles();
       await sleep(5000)
 
 
@@ -129,25 +128,21 @@ function sleep(ms) {
       );
       await newWallet1.click();
 
-      let newWindowHandle1;
-        let allWindowHandles1 = await driver.getAllWindowHandles();
-        await sleep(5000);
-
-        for (let handle of allWindowHandles1) {
-            await driver.switchTo().window(handle);
-            let url = await driver.getCurrentUrl();
-            if (url === 'https://solflare.com/provider#origin=https%3A%2F%2Fapp-core-client.vercel.app&network=mainnet-beta') {
-                newWindowHandle1 = handle;
-                break;
-            }
-        }
-
-        if (!newWindowHandle1) {
-            throw new Error('Không tìm thấy cửa sổ mới với URL mong muốn lần thứ hai');
-        }
-
-        // Chuyển sang cửa sổ mới lần thứ hai
-        await driver.switchTo().window(newWindowHandle1);
+      await driver.wait(async () => {
+        let handles = await driver.getAllWindowHandles();
+        return handles.length > initialWindowHandles.length;
+      }, 20000);
+  
+      // Lấy lại tất cả các handle của cửa sổ sau khi cửa sổ mới mở
+      let allWindowHandles1 = await driver.getAllWindowHandles();
+  
+      // Tìm handle của cửa sổ mới (khác với các handle ban đầu)
+      let newWindowHandle1 = allWindowHandles1.find(
+        (handle) => !initialWindowHandles.includes(handle)
+      );
+  
+      // Chuyển sang cửa sổ mới
+      await driver.switchTo().window(newWindowHandle1);
 
         let connectWallet = await driver.findElement(By.xpath('/html/body/div[2]/div[2]/div/div[3]/div/button[2]'));
         await connectWallet.click();
@@ -240,9 +235,11 @@ function sleep(ms) {
         // fs.writeFileSync('test-results.txt', '| TestCase 1| Pass   |\n', { flag: 'a' });
     } else {
         console.log('Test Case 1: Fail');
-        fs.writeFileSync('test-results.txt', '| Test Case | Result |\n', { flag: 'a' });
-        fs.writeFileSync('test-results.txt', '|-----------|--------|\n', { flag: 'a' });
-        fs.writeFileSync('test-results.txt', '| TestCase 1| Fail   |\n', { flag: 'a' });
+        console.log('|-------------------|--------|')
+        console.log('| Test Case         | Result |')
+        console.log('|-------------------|--------|')
+        console.log('| TestCase 1        | Fail   |')
+        console.log('|-------------------|--------|')
     }
 
       await sleep(2000)

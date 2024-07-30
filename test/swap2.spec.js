@@ -13,8 +13,9 @@ function sleep(ms) {
     await sleep(10000);
     await driver.manage().setTimeouts({ implicit: 20000 });
     await driver.manage().window().maximize();
-
+    
     let originalWindow = await driver.getWindowHandle();
+    let initialWindowHandles = await driver.getAllWindowHandles();
 
     let connectButton = await driver.findElement(By.xpath('//*[@id="nav_bar"]/div[3]/button[2]'));
     await connectButton.click();
@@ -29,9 +30,7 @@ function sleep(ms) {
     let newWallet = await driver.findElement(By.xpath('//*[@id="connect-web-button"]'));
     await newWallet.click();
 
-    let initialWindowHandles = await driver.getAllWindowHandles();
     await sleep(5000)
-
 
     let newWindowHandle;
     let allWindowHandles = await driver.getAllWindowHandles();
@@ -39,6 +38,7 @@ function sleep(ms) {
     for (let handle of allWindowHandles) {
         await driver.switchTo().window(handle);
         let url = await driver.getCurrentUrl();
+        await sleep(2000);
         if (url === 'https://solflare.com/onboard') {
             newWindowHandle = handle;
             break;
@@ -53,7 +53,7 @@ function sleep(ms) {
     await sleep(5000);
 
     let alreadyWallet = driver.findElement(By.xpath('//*[@id="root"]/div/div[2]/div/div[2]/div[2]/button'));
-    // await driver.executeScript("arguments[0].scrollIntoView(true);", alreadyWallet);
+    await driver.executeScript("arguments[0].scrollIntoView(true);", alreadyWallet);
     await driver.executeScript("arguments[0].click();", alreadyWallet);
     await sleep(2000);
 
@@ -95,7 +95,7 @@ function sleep(ms) {
 
     let solflareButton1 = await driver.findElement(By.xpath('//*[@id="v-menu-21"]/div/div/div[1]'));
     await solflareButton1.click();
-    await sleep(5000);
+    await sleep(3000);
 
     await driver.wait(until.elementLocated(By.xpath('/html/body/div[3]/iframe')), 21000);
     let iframe1 = await driver.findElement(By.xpath('/html/body/div[3]/iframe'));
@@ -104,34 +104,10 @@ function sleep(ms) {
     let newWallet1 = await driver.findElement(By.xpath('//*[@id="connect-web-button"]'));
     await newWallet1.click();
 
-    // await driver.wait(async () => {
-    //   let handles = await driver.getAllWindowHandles();
-    //   return handles.length > initialWindowHandles.length;
-    // }, 10000);
-
-    // let newWindowHandle1;
-    //     let allWindowHandles1 = await driver.getAllWindowHandles();
-    //     await sleep(5000);
-
-    //     for (let handle of allWindowHandles1) {
-    //         await driver.switchTo().window(handle);
-    //         let url = await driver.getCurrentUrl();
-    //         if (url === 'https://solflare.com/provider#origin=https%3A%2F%2Fapp-core-client.vercel.app&network=mainnet-beta') {
-    //             newWindowHandle1 = handle;
-    //             break;
-    //         }
-    //     }
-
-    //     if (!newWindowHandle1) {
-    //         throw new Error('Không tìm thấy cửa sổ mới với URL mong muốn lần thứ hai');
-    //     }
-
-    // await driver.switchTo().window(newWindowHandle1);
-
     await driver.wait(async () => {
       let handles = await driver.getAllWindowHandles();
       return handles.length > initialWindowHandles.length;
-    }, 30000);
+    }, 20000);
 
     // Lấy lại tất cả các handle của cửa sổ sau khi cửa sổ mới mở
     let allWindowHandles1 = await driver.getAllWindowHandles();
@@ -144,9 +120,9 @@ function sleep(ms) {
     // Chuyển sang cửa sổ mới
     await driver.switchTo().window(newWindowHandle1);
 
-
     let connectWallet = await driver.findElement(By.xpath('/html/body/div[2]/div[2]/div/div[3]/div/button[2]'));
-    await connectWallet.click();
+    // await connectWallet.click();
+    await driver.executeScript("arguments[0].click();", connectWallet);
     await driver.switchTo().window(originalWindow);
     await sleep(2000);
 
@@ -167,9 +143,6 @@ function sleep(ms) {
       await inputButton.sendKeys("10");
 
       await sleep(2000);
-
-      // let swapButton = await driver.findElement(By.xpath('//*[@id="home"]/div[2]/div/div[3]/div[2]/div/div[2]/div[2]/div/button'));
-      // await swapButton.click();
 
       let swapButton = await driver.findElement(By.xpath('//*[@id="home"]/div[2]/div/div[3]/div[2]/div/div[2]/div[2]/div/button'));
       await driver.executeScript("arguments[0].click();", swapButton);
