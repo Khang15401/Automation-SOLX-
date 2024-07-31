@@ -28,7 +28,7 @@ function sleep(ms) {
       let connectButton = await driver.findElement(By.xpath('//*[@id="nav_bar"]/div[3]/button[2]'));
         await connectButton.click();
 
-        let solflareButton = await driver.findElement(By.xpath('//*[@id="v-menu-21"]/div/div/div[1]'));
+        let solflareButton = await driver.findElement(By.xpath('//*[@id="v-menu-20"]/div/div/div[1]'));
         await solflareButton.click();
 
       // Chờ iframe xuất hiện và chuyển đổi vào iframe
@@ -115,7 +115,7 @@ function sleep(ms) {
       let connectButton1 = await driver.findElement(By.xpath('//*[@id="nav_bar"]/div[3]/button[2]'));
       await connectButton1.click();
 
-      let solflareButton1 = await driver.findElement(By.xpath('//*[@id="v-menu-21"]/div/div/div[1]'));
+      let solflareButton1 = await driver.findElement(By.xpath('//*[@id="v-menu-20"]/div/div/div[1]'));
       await solflareButton1.click();
 
       await driver.wait(until.elementLocated(By.xpath('/html/body/div[3]/iframe')), 20000);
