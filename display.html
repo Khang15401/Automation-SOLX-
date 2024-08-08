@@ -1,0 +1,98 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <p id="text">This is a sample text. Click to see the properties.</p>
+    <div id="popup" class="popup"></div>
+
+    <script>
+        (function() {
+            if (window.popupActive) {
+                document.body.removeEventListener('click', showPopup, true);
+                document.removeEventListener('click', hidePopup, true);
+                if (window.popup) {
+                    document.body.removeChild(window.popup);
+                }
+                window.popupActive = false;
+                alert('Popup deactivated');
+                return;
+            }
+
+            window.popupActive = true;
+
+            window.popup = document.createElement('div');
+            window.popup.style.position = 'absolute';
+            window.popup.style.backgroundColor = 'white';
+            window.popup.style.border = '1px solid #ccc';
+            window.popup.style.padding = '10px';
+            window.popup.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+            window.popup.style.display = 'none';
+            window.popup.style.zIndex = '1000'; // Thêm thuộc tính z-index
+            document.body.appendChild(window.popup);
+
+            function rgbToHex(rgb) {
+                const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(rgb);
+                if (!result) {
+                    return rgb;
+                }
+                const r = parseInt(result[1]);
+                const g = parseInt(result[2]);
+                const b = parseInt(result[3]);
+
+                return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+            }
+
+            function showPopup(event) {
+                const element = event.target;
+                const computedStyle = getComputedStyle(element);
+                const fontSize = computedStyle.fontSize;
+                const color = computedStyle.color;
+                const fontFamily = computedStyle.fontFamily;
+                const fontWeight = computedStyle.fontWeight;
+                const lineHeight = computedStyle.lineHeight;
+
+                const colorHex = rgbToHex(color);
+
+                window.popup.innerHTML = `
+                    <p>Font Size: ${fontSize}</p>
+                    <p>Color: ${colorHex}<span style="display:inline-block;width:10px;height:10px;background-color:${colorHex};margin-left:6px;margin-bottom:7px;vertical-align:middle;border:1px solid #ccc;"></span></p>
+                    <p>Font Family: ${fontFamily}</p>
+                    <p>Font Weight: ${fontWeight}</p>
+                    <p>Line Height: ${lineHeight}</p>
+                `;
+
+                window.popup.style.display = 'block';
+                window.popup.style.left = `${event.pageX}px`;
+                window.popup.style.top = `${event.pageY}px`;
+            }
+
+            function hidePopup(event) {
+                if (!window.popup.contains(event.target)) {
+                    window.popup.style.display = 'none';
+                }
+            }
+
+            document.body.addEventListener('click', showPopup, true);
+            document.addEventListener('click', hidePopup, true);
+
+            alert('Popup activated');
+        })();
+    </script>
+</body>
+</html> -->
+
+
