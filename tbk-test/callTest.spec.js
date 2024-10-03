@@ -11,6 +11,7 @@ const axios = require('axios');
 
 
     const boostDataUrl = 'https://tbkx-core-be-sandbox.up.railway.app/boost/boost-data';
+    const preSaleUrl = 'https://tbkx-core-be-sandbox.up.railway.app/boost/fake';
 
     try {
         const response = await axios.post(url, { telegram_id: telegram_id }, {
@@ -20,22 +21,56 @@ const axios = require('axios');
             }
         });
         const access_token = (response.data.access_token);
-        // if (response.status === 201) {
-        //     console.log('API Response:', response.data);
-        // } else {
-        //     console.log('Failed with status:', response.status);
-        // }
+        console.log(access_token);
 
-        const boostData = await axios.get(boostDataUrl, {
-            headers: {
-                'Authorization': `Bearer ${access_token}`,
-                'Content-Type': 'application/json',
+
+        const preSale = await axios.post(preSaleUrl, 
+            {
+                "JettonTransfer": {
+                    "contractAddress": "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs",
+                    "walletFrom": "EQDKXNR2xopctqwjKhN6AT9WqGdOK0XB2CveoTYEc4oMRVG7",
+                    "walletTo": "EQAvUOECK9bkx8Wfgu7cVJcN6WrvAl9SFlW9JLb9jTWB8nSg",
+                    "amount": 0.01
+                },
+                "feeNetwork": 0.008407052,
+                "blockTime": 1726822698,
+                "signature": "131e521ric1748q15e718d1e6c1251b164354e37bkgqa111fs115c862c7141de",
+                "type": "boost",
+                "typeInternal": "j:false--u:bafac4df-51b7-4301-aa91-d5018fbacf61--t:boost--j:true--a:false--n:1e-8",
+                "bocHash": "b21df0bde0b12eb82fd0a681b5f1490dc2827029e7fd3a9eec7ccf7321711449",
+                "publicKey": "",
+                "isJetton": "true",
+                "userId": "d37b6c5f-b96c-4632-9a32-84dce3191ff3"
+            },
+            {
+
+                headers: {
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json',
+                }
             }
-        });
-        console.log(boostData.data);
-        
-    } catch (error) {
-        // In ra lỗi nếu có
-        console.error("Error occurred:", error);
-    }
-})();
+        );
+
+        console.log('Pre-sale API:', preSale.data);
+    // if (response.status === 201) {
+    //     console.log('API Response:', response.data);
+    // } else {
+    //     console.log('Failed with status:', response.status);
+    // }
+
+    const boostData = await axios.get(boostDataUrl, {
+        headers: {
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json',
+        }
+    });
+    console.log(boostData.data);
+
+
+
+
+} catch (error) {
+    // In ra lỗi nếu có
+    console.error("Error occurred:", error);
+}
+}) ();
