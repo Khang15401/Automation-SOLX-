@@ -12,8 +12,8 @@ function sleep(ms) {
 
   const url = "https://tbkx-core-be-sandbox.up.railway.app/user/connectBE";
   const token = "YWRtaW46NzNBRENBQTRGRTNDNUNCMzE2OTIxNjI1RjE3OUQ==";
-  const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI3MTM1NDc2OTUzIiwidHlwZSI6InRlbGVncmFtIiwidXNlcl9pZCI6ImFjN2U1ZmJhLTI2OTUtNDUzMS05YmFmLTJjYzk3MDRmNDc2YSIsImlhdCI6MTcyOTUwNTQzMiwiZXhwIjoxNzI5NTA5MDMyfQ.eQ-yamvzq-Md-IhP3YyMww6TGA9cYAzbTCsAd172Kv4'
-  const access_token1 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI2MDA3NzQ3OTM5IiwidHlwZSI6InRlbGVncmFtIiwidXNlcl9pZCI6IjNhMDE0NjVmLTg2M2EtNDBhYS04OTc3LTdjNDUzZTY3NDcyNyIsImlhdCI6MTcyOTUwNTM0MywiZXhwIjoxNzI5NTA4OTQzfQ.Om_OYk0AqrA6YrRwq4sqhJyB58VQXfToQ3aVAM0mAzw'
+  const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI3MTM1NDc2OTUzIiwidHlwZSI6InRlbGVncmFtIiwidXNlcl9pZCI6ImFjN2U1ZmJhLTI2OTUtNDUzMS05YmFmLTJjYzk3MDRmNDc2YSIsImlhdCI6MTczMDM0NTgzMSwiZXhwIjoxNzMwMzQ5NDMxfQ.zMEfz_zdlU1KkZwTYFUQrZu-N3kUXvs-fsK-Frk4K48'
+  const access_token1 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI2MDA3NzQ3OTM5IiwidHlwZSI6InRlbGVncmFtIiwidXNlcl9pZCI6IjNhMDE0NjVmLTg2M2EtNDBhYS04OTc3LTdjNDUzZTY3NDcyNyIsImlhdCI6MTczMDM0Mzg5NCwiZXhwIjoxNzMwMzQ3NDk0fQ.Ar2hLdlyTs9MKYf7aCd9rcGtHTHV62sVAaL5qTjVb3w'
 
   const telegram_id = "6007747939";
   const telegram_id1 = "7135476953";
@@ -144,7 +144,7 @@ function sleep(ms) {
       {
 
         headers: {
-          'Authorization': `Bearer ${access_token}`,
+          'Authorization': `Bearer ${access_token1}`,
           'Content-Type': 'application/json',
         }
       }
@@ -161,9 +161,10 @@ function sleep(ms) {
         "Content-Type": "application/json",
       },
     });
-    console.log(findTransacion.data);
+      
     const itemsArray = findTransacion.data.items;
     fs.writeFileSync('resultApiAuto.json', JSON.stringify(itemsArray, null, 2), 'utf-8');
+    console.log(itemsArray);
 
     const boostData = await axios.get(boostDataUrl, {
       headers: {
@@ -184,7 +185,7 @@ function sleep(ms) {
     console.log('Group Sale Now: ', Group_Sale_Now);
 
     console.log('Group Sale After: ',Group_Sale_After);
-    console.log("=============================================================================================================================================================================================END=TEST=============================================================================================================================================================");
+    console.log("======================================================================");
   } catch (error) {
     console.error("Error occurred:", error);
   }
